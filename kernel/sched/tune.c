@@ -828,13 +828,9 @@ static int dynamic_boost(struct schedtune *st, int boost)
 	return ret;
 }
 
-int do_stune_boost(char *st_name, int boost)
+static int _do_stune_boost(struct schedtune *st, int boost)
 {
 	int ret = 0;
-	struct schedtune *st = getSchedtune(st_name);
-
-	if (!st)
-		return -EINVAL;
 
 	mutex_lock(&stune_boost_mutex);
 
@@ -856,11 +852,22 @@ int reset_stune_boost(char *st_name)
 		return -EINVAL;
 
 	mutex_lock(&stune_boost_mutex);
-	ret = dynamic_boostdynamic_boost_write(st, st->boost_default);
+	ret = dynamic_boost(st, st->boost_default);
 	mutex_unlock(&stune_boost_mutex);
 
 	return ret;
 }
+
+int do_stune_boost(char *st_name, int boost)
+{
+	struct schedtune *st = getSchedtune(st_name);
+
+	if (!st)
+		return -EINVAL;
+
+	return _do_stune_boost(st, boost);
+}
+
 #endif /* CONFIG_DYNAMIC_STUNE_BOOST */
 
 #else /* CONFIG_CGROUP_SCHEDTUNE */
