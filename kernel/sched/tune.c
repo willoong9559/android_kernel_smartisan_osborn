@@ -32,6 +32,7 @@ struct boost_slot {
 	struct list_head list;
 	int idx;
 };
+static struct schedtune *st_ta;
 #endif /* CONFIG_DYNAMIC_STUNE_BOOST */
 
 /* Performance Boost region (B) threshold params */
@@ -793,7 +794,7 @@ static void write_default_values(struct cgroup_subsys_state *css)
 
 		if (!strcmp(css->cgroup->kn->name, tgt.name)) {
 			pr_info("stune_assist: setting values for %s: boost=%d prefer_idle=%d sched_boost=%d\n",
-				tgt.name, tgt.boost, tgt.prefer_idle);
+				tgt.name, tgt.boost, tgt.prefer_idle, tgt.sched_boost);
 
 			boost_write(css, NULL, tgt.boost);
 			prefer_idle_write(css, NULL, tgt.prefer_idle);
@@ -831,6 +832,9 @@ schedtune_css_alloc(struct cgroup_subsys_state *parent_css)
 			break;
 #ifdef CONFIG_STUNE_ASSIST
 		write_default_values(&allocated_group[idx]->css);
+#endif
+#ifdef CONFIG_DYNAMIC_STUNE_BOOST
+		filterSchedtune(allocated_group[idx], &st_ta, "top-app");
 #endif
 	}
 	if (idx == BOOSTGROUPS_COUNT) {
