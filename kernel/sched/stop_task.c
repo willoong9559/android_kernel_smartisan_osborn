@@ -10,13 +10,14 @@
  * See kernel/stop_machine.c
  */
 
-static inline void
-inc_hmp_sched_stats_stop(struct rq *rq, struct task_struct *p) { }
-
-static inline void
-dec_hmp_sched_stats_stop(struct rq *rq, struct task_struct *p) { }
-
-#endif	/* CONFIG_SCHED_HMP */
+#ifdef CONFIG_SMP
+static int
+select_task_rq_stop(struct task_struct *p, int cpu, int sd_flag, int flags,
+		    int sibling_count_hint)
+{
+	return task_cpu(p); /* stop tasks as never migrate */
+}
+#endif /* CONFIG_SMP */
 
 static void
 check_preempt_curr_stop(struct rq *rq, struct task_struct *p, int flags)
