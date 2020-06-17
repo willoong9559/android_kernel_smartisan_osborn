@@ -1132,9 +1132,13 @@ static struct rq *move_queued_task(struct rq *rq, struct task_struct *p, int new
 
 	p->on_rq = TASK_ON_RQ_MIGRATING;
 	dequeue_task(rq, p, 0);
+#ifdef CONFIG_SCHED_WALT
 	double_lock_balance(rq, cpu_rq(new_cpu));
+#endif
 	set_task_cpu(p, new_cpu);
+#ifdef CONFIG_SCHED_WALT
 	double_unlock_balance(rq, cpu_rq(new_cpu));
+#endif
 	raw_spin_unlock(&rq->lock);
 
 	rq = cpu_rq(new_cpu);
@@ -1403,9 +1407,7 @@ static void __migrate_swap_task(struct task_struct *p, int cpu)
 
 		p->on_rq = TASK_ON_RQ_MIGRATING;
 		deactivate_task(src_rq, p, 0);
-		p->on_rq = TASK_ON_RQ_MIGRATING;
 		set_task_cpu(p, cpu);
-		p->on_rq = TASK_ON_RQ_QUEUED;
 		activate_task(dst_rq, p, 0);
 		p->on_rq = TASK_ON_RQ_QUEUED;
 		check_preempt_curr(dst_rq, p, 0);
@@ -2025,7 +2027,7 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags,
 {
 	unsigned long flags;
 	int cpu, src_cpu, success = 0;
-#ifdef CONFIG_SMP
+#if defined(CONFIG_SMP) && defined(CONFIG_SCHED_WALT)
 	struct rq *rq;
 	u64 wallclock;
 #endif
@@ -2109,6 +2111,7 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags,
 	 */
 	smp_rmb();
 
+#ifdef CONFIG_SCHED_WALT
 	rq = cpu_rq(task_cpu(p));
 
 	raw_spin_lock(&rq->lock);
@@ -2116,6 +2119,7 @@ try_to_wake_up(struct task_struct *p, unsigned int state, int wake_flags,
 	walt_update_task_ravg(rq->curr, rq, TASK_UPDATE, wallclock, 0);
 	walt_update_task_ravg(p, rq, TASK_WAKE, wallclock, 0);
 	raw_spin_unlock(&rq->lock);
+#endif
 
 	p->sched_contributes_to_load = !!task_contributes_to_load(p);
 	p->state = TASK_WAKING;
@@ -2257,6 +2261,10 @@ static void __sched_fork(unsigned long clone_flags, struct task_struct *p)
 	p->se.prev_sum_exec_runtime	= 0;
 	p->se.nr_migrations		= 0;
 	p->se.vruntime			= 0;
+#ifdef CONFIG_SCHED_WALT
+	p->last_sleep_ts		= 0;
+#endif
+
 	INIT_LIST_HEAD(&p->se.group_node);
 	walt_init_new_task_load(p);
 
@@ -3097,6 +3105,9 @@ void scheduler_tick(void)
 	trigger_load_balance(rq);
 #endif
 	rq_last_tick_reset(rq);
+
+	if (curr->sched_class == &fair_sched_class)
+		check_for_migration(rq, curr);
 }
 
 #ifdef CONFIG_NO_HZ_FULL
@@ -3367,7 +3378,6 @@ static void __sched notrace __schedule(bool preempt)
 	int cpu;
 	u64 wallclock;
 
-
 	cpu = smp_processor_id();
 	rq = cpu_rq(cpu);
 	prev = rq->curr;
@@ -3440,6 +3450,10 @@ static void __sched notrace __schedule(bool preempt)
 	BUG_ON(task_cpu(next) != cpu_of(rq));
 
 	if (likely(prev != next)) {
+#ifdef CONFIG_SCHED_WALT
+		if (!prev->on_rq)
+			prev->last_sleep_ts = wallclock;
+#endif
 		rq->nr_switches++;
 		rq->curr = next;
 		++*switch_count;
@@ -5877,9 +5891,11 @@ migration_call(struct notifier_block *nfb, unsigned long action, void *hcpu)
 	switch (action & ~CPU_TASKS_FROZEN) {
 
 	case CPU_UP_PREPARE:
+#ifdef CONFIG_SCHED_WALT
 		raw_spin_lock_irqsave(&rq->lock, flags);
 		walt_set_window_start(rq);
-		raw_spin_unlock_irqrestore(&rq->lock, flags)
+		raw_spin_unlock_irqrestore(&rq->lock, flags);
+#endif
 		rq->calc_load_update = calc_load_update;
 		break;
 
@@ -8027,6 +8043,7 @@ void __init sched_init(void)
 		rq->active_balance = 0;
 		rq->next_balance = jiffies;
 		rq->push_cpu = 0;
+		rq->push_task = NULL;
 		rq->cpu = i;
 		rq->online = 0;
 		rq->idle_stamp = 0;
