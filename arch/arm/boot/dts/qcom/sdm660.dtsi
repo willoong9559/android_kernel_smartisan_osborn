@@ -48,16 +48,15 @@
 
 		CPU0: cpu@0 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x0>;
-			clock-frequency = <1843200000>;
-			enable-method = "psci";
 			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
-			qcom,ea = <&ea0>;
+			enable-method = "psci";
 			efficiency = <1024>;
 			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_0>;
+			qcom,ea = <&ea0>;
 			L2_0: l2-cache {
 				compatible = "arm,arch-cache";
 				cache-level = <2>;
@@ -73,22 +72,21 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_0: l1-tlb {
-				qcom,dump-size = <0x2800>;
+				qcom,dump-size = <0x2000>;
 			};
 		};
 
 		CPU1: cpu@1 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x1>;
-			clock-frequency = <1843200000>;
-			enable-method = "psci";
-			qcom,limits-info = <&mitigation_profile0>;
+			qcom,limits-info = <&mitigation_profile1>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
-			qcom,ea = <&ea1>;
+			enable-method = "psci";
 			efficiency = <1024>;
 			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_0>;
+			qcom,ea = <&ea1>;
 			L1_I_1: l1-icache {
 				compatible = "arm,arch-cache";
 				qcom,dump-size = <0x9040>;
@@ -98,22 +96,21 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_1: l1-tlb {
-				qcom,dump-size = <0x2800>;
+				qcom,dump-size = <0x2000>;
 			};
 		};
 
 		CPU2: cpu@2 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x2>;
-			clock-frequency = <1843200000>;
-			enable-method = "psci";
-			qcom,limits-info = <&mitigation_profile0>;
+			qcom,limits-info = <&mitigation_profile2>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
-			qcom,ea = <&ea2>;
+			enable-method = "psci";
 			efficiency = <1024>;
 			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_0>;
+			qcom,ea = <&ea2>;
 			L1_I_2: l1-icache {
 				compatible = "arm,arch-cache";
 				qcom,dump-size = <0x9040>;
@@ -123,22 +120,21 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_2: l1-tlb {
-				qcom,dump-size = <0x2800>;
+				qcom,dump-size = <0x2000>;
 			};
 		};
 
 		CPU3: cpu@3 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x3>;
-			clock-frequency = <1843200000>;
-			enable-method = "psci";
-			qcom,limits-info = <&mitigation_profile0>;
+			qcom,limits-info = <&mitigation_profile3>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
-			qcom,ea = <&ea3>;
+			enable-method = "psci";
 			efficiency = <1024>;
 			sched-energy-costs = <&CPU_COST_0 &CLUSTER_COST_0>;
 			next-level-cache = <&L2_0>;
+			qcom,ea = <&ea3>;
 			L1_I_3: l1-icache {
 				compatible = "arm,arch-cache";
 				qcom,dump-size = <0x9040>;
@@ -148,22 +144,21 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_3: l1-tlb {
-				qcom,dump-size = <0x2800>;
+				qcom,dump-size = <0x2000>;
 			};
 		};
 
 		CPU4: cpu@100 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x100>;
-			clock-frequency = <2208000000>;
-			enable-method = "psci";
-			qcom,limits-info = <&mitigation_profile1>;
+			qcom,limits-info = <&mitigation_profile4>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
-			qcom,ea = <&ea4>;
+			enable-method = "psci";
 			efficiency = <1638>;
 			sched-energy-costs = <&CPU_COST_1 &CLUSTER_COST_1>;
 			next-level-cache = <&L2_1>;
+			qcom,ea = <&ea4>;
 			L2_1: l2-cache {
 				compatible = "arm,arch-cache";
 				cache-level = <2>;
@@ -183,16 +178,15 @@
 
 		CPU5: cpu@101 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x101>;
-			clock-frequency = <2208000000>;
-			enable-method = "psci";
-			qcom,limits-info = <&mitigation_profile2>;
+			qcom,limits-info = <&mitigation_profile5>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
-			qcom,ea = <&ea5>;
+			enable-method = "psci";
 			efficiency = <1638>;
 			sched-energy-costs = <&CPU_COST_1 &CLUSTER_COST_1>;
 			next-level-cache = <&L2_1>;
+			qcom,ea = <&ea5>;
 			L1_I_101: l1-icache {
 				compatible = "arm,arch-cache";
 				qcom,dump-size = <0x12000>;
@@ -208,16 +202,15 @@
 
 		CPU6: cpu@102 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x102>;
-			clock-frequency = <2208000000>;
-			enable-method = "psci";
-			qcom,limits-info = <&mitigation_profile3>;
+			qcom,limits-info = <&mitigation_profile6>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
-			qcom,ea = <&ea6>;
+			enable-method = "psci";
 			efficiency = <1638>;
 			sched-energy-costs = <&CPU_COST_1 &CLUSTER_COST_1>;
 			next-level-cache = <&L2_1>;
+			qcom,ea = <&ea6>;
 			L1_I_102: l1-icache {
 				compatible = "arm,arch-cache";
 				qcom,dump-size = <0x12000>;
@@ -233,16 +226,15 @@
 
 		CPU7: cpu@103 {
 			device_type = "cpu";
-			compatible = "arm,kryo";
+			compatible = "arm,armv8";
 			reg = <0x0 0x103>;
-			clock-frequency = <2208000000>;
-			enable-method = "psci";
-			qcom,limits-info = <&mitigation_profile4>;
+			qcom,limits-info = <&mitigation_profile7>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
-			qcom,ea = <&ea7>;
+			enable-method = "psci";
 			efficiency = <1638>;
 			sched-energy-costs = <&CPU_COST_1 &CLUSTER_COST_1>;
 			next-level-cache = <&L2_1>;
+			qcom,ea = <&ea7>;
 			L1_I_103: l1-icache {
 				compatible = "arm,arch-cache";
 				qcom,dump-size = <0x12000>;
@@ -950,8 +942,8 @@
 		compatible = "qcom,bcl";
 		qcom,bcl-enable;
 		qcom,bcl-framework-interface;
-		qcom,bcl-hotplug-list = <>;
-		qcom,bcl-soc-hotplug-list = <>;
+		qcom,bcl-hotplug-list = <&CPU6 &CPU7>;
+		qcom,bcl-soc-hotplug-list = <&CPU4 &CPU5 &CPU6 &CPU7>;
 		qcom,ibat-monitor {
 			qcom,low-threshold-uamp = <3400000>;
 			qcom,high-threshold-uamp = <4200000>;
