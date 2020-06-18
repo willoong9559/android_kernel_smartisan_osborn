@@ -72,7 +72,7 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_0: l1-tlb {
-				qcom,dump-size = <0x2000>;
+				qcom,dump-size = <0x2800>;
 			};
 		};
 
@@ -80,7 +80,7 @@
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x1>;
-			qcom,limits-info = <&mitigation_profile1>;
+			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			enable-method = "psci";
 			efficiency = <1024>;
@@ -96,7 +96,7 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_1: l1-tlb {
-				qcom,dump-size = <0x2000>;
+				qcom,dump-size = <0x2800>;
 			};
 		};
 
@@ -104,7 +104,7 @@
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x2>;
-			qcom,limits-info = <&mitigation_profile2>;
+			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			enable-method = "psci";
 			efficiency = <1024>;
@@ -120,7 +120,7 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_2: l1-tlb {
-				qcom,dump-size = <0x2000>;
+				qcom,dump-size = <0x2800>;
 			};
 		};
 
@@ -128,7 +128,7 @@
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x3>;
-			qcom,limits-info = <&mitigation_profile3>;
+			qcom,limits-info = <&mitigation_profile0>;
 			qcom,lmh-dcvs = <&lmh_dcvs0>;
 			enable-method = "psci";
 			efficiency = <1024>;
@@ -144,7 +144,7 @@
 				qcom,dump-size = <0x9040>;
 			};
 			L1_TLB_3: l1-tlb {
-				qcom,dump-size = <0x2000>;
+				qcom,dump-size = <0x2800>;
 			};
 		};
 
@@ -152,7 +152,7 @@
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x100>;
-			qcom,limits-info = <&mitigation_profile4>;
+			qcom,limits-info = <&mitigation_profile1>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			enable-method = "psci";
 			efficiency = <1638>;
@@ -180,7 +180,7 @@
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x101>;
-			qcom,limits-info = <&mitigation_profile5>;
+			qcom,limits-info = <&mitigation_profile2>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			enable-method = "psci";
 			efficiency = <1638>;
@@ -204,7 +204,7 @@
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x102>;
-			qcom,limits-info = <&mitigation_profile6>;
+			qcom,limits-info = <&mitigation_profile3>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			enable-method = "psci";
 			efficiency = <1638>;
@@ -228,7 +228,7 @@
 			device_type = "cpu";
 			compatible = "arm,armv8";
 			reg = <0x0 0x103>;
-			qcom,limits-info = <&mitigation_profile7>;
+			qcom,limits-info = <&mitigation_profile4>;
 			qcom,lmh-dcvs = <&lmh_dcvs1>;
 			enable-method = "psci";
 			efficiency = <1638>;
